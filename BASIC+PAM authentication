@@ -1,5 +1,8 @@
 #Apache user PAM Authentication
+# step1
 sudo yum install -y mod_authnz_pam
+
+#step2, append by changing the right Directory and user name
 
 sed -i -e '$a<Directory "/var/www/html/protected"> \
 \n\t AuthType Basic \n\t \
@@ -8,23 +11,29 @@ AuthBasicProvider PAM \n\t \
 AuthPAMService http-auth \n\t \
 Require user siva \n</Directory>' \
 /etc/httpd/conf/httpd.conf
-#---
+
+#--- validate------------
+
+$tail -10 /etc/httpd/conf/httpd.conf
 <Directory "/var/www/html/protected">
     #SSLRequireSSL
     AuthType Basic
     AuthName "PAM Authentication"
     AuthBasicProvider PAM
     AuthPAMService http-auth
-    Require user osboxes
+    Require user siva
 </Directory>
 #---
+
+# step3
+
 cat <<EOF> /etc/pam.d/http-auth
 auth  required      pam_unix.so
 account  required   pam_unix.so
 session  required   pam_unix.so
 EOF
 
-#---
+# step4
 cp /etc/shadow /etc/shadow_backup
 chown root:apache /etc/shadow
 chmod 440 /etc/shadow
