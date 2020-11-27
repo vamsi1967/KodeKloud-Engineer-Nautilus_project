@@ -1,10 +1,11 @@
 #Apache user PAM Authentication
-# step1
-sudo yum install -y mod_authnz_pam
+# step1 install Pam module
 
-#step2, append by changing the right Directory and user name
+$ sudo yum install -y mod_authnz_pam
 
-sed -i -e '$a<Directory "/var/www/html/protected"> \
+# step2, append by changing the right Directory and user name
+
+$ sed -i -e '$a<Directory "/var/www/html/protected"> \
 \n\t AuthType Basic \n\t \
 AuthName "PAM Authentication" \n\t \
 AuthBasicProvider PAM \n\t \
